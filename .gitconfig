@@ -1,0 +1,9 @@
+[credential]
+	helper = store
+[user]
+	email = benjamin.j.davis96@gmail.com
+	name = allRisc
+[init]
+	defaultBranch = main
+[alias]
+	com = commit

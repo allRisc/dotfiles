@@ -1,0 +1,4 @@
+# Add method to get the current git branch
+git_current_branch () {
+    git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}'
+}

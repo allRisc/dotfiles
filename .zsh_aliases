@@ -1,0 +1,34 @@
+# CD Aliases
+for i in {1..5}; do
+  al="."
+  cmd=""
+  for ((j=0; j<$i; j++)); do
+    al="${al}."
+    cmd="${cmd}../"
+  done
+  alias $al="cd $cmd"
+done
+
+alias ~="cd ~"
+
+# LS Aliases
+alias ls='ls --color=auto'
+alias ll='ls -l --color=always'
+alias la='ls -l -A --color=always'
+
+# Git aliases
+zinit snippet OMZP::git  # A collection from Oh-My_Zsh
+
+alias gbc="git branch -d \$(git branch --merged main | grep -v main)"
+alias gsm="git submodule update --init --recursive"
+alias glr="git pull --recurse; git submodule update --init --recursive"
+
+# VPN Helpers
+if command -v nordvpn 2>&1 > /dev/null; then
+    alias start_vpn='nordvpn connect'
+    alias stop_vpn='nordvpn disconnect'
+    alias start_vpn_phx='nordvpn connect United_States Phoenix'
+fi
+
+# ZSH Helpers
+alias reload="source ~/.zshrc"
