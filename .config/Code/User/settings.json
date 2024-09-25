@@ -1,0 +1,52 @@
+{
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+        {
+            "scope": [
+            "string.quoted.docstring.multi.python",
+            "string.quoted.docstring.multi.python punctuation.definition.string.begin.python",
+            "string.quoted.docstring.multi.python punctuation.definition.string.end.python",
+            "string.quoted.docstring.multi.python constant.character.escape.python"
+            ],
+            "settings": {
+            "foreground": "#99FFCC"
+            }
+        }
+        ]
+    },
+    "editor.renderWhitespace": "all",
+    "C_Cpp.default.systemIncludePath": [
+        "${workspaceFolder}/libraries/**",
+        "${userHome}/.arduino15/packages/arduino/tools/avr-gcc/7.3.0-atmel3.6.1-arduino7/avr/include/**"
+    ],
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "monkeyC.developerKeyPath": "/home/ben/programming/garmin/dev_key/developer_key",
+    "markdown.extension.toc.levels": "2..6",
+    "editor.fontFamily": "Fira Code",
+    "editor.fontLigatures": true,
+    "editor.rulers": [
+        100
+    ],
+    "editor.lineNumbers": "relative",
+    "vim.handleKeys": {
+        "<C-d>": true,
+        "<C-s>": false,
+        "<C-z>": false,
+        "<C-y>": false,
+        "<C-k>": false,
+        "<C-p>": false,
+        "<C-b>": false,
+        "<C-f>": false,
+        "<C-h>": false,
+    },
+    "terminal.integrated.commandsToSkipShell": [
+        "-workbench.action.terminal.focusFind",     // ctrl-f (autocomplete)
+        "-workbench.action.files.newUntitledFile",  // ctrl-n (previous autocomplete suggestion)
+        "-workbench.action.quickOpen",              // ctrl-p (next auto complete suggestion)
+    ]
+}
