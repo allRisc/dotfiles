@@ -12,8 +12,7 @@ fi
 # Get LS Colors if necessary
 ####################################################################################################
 if [[ -v LS_COLORS ]]; then
-    echo "Setting LS_COLORS"
-    LS_COLORS=echo $(bash -c "echo \$LS_COLORS")
+    LS_COLORS=$(bash -c "echo \$LS_COLORS")
 fi
 
 ####################################################################################################
