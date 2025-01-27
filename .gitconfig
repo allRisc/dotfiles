@@ -7,3 +7,5 @@
 	defaultBranch = main
 [alias]
 	com = commit
+[core]
+	editor = vim
