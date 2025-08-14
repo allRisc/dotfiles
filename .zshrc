@@ -110,6 +110,11 @@ zinit snippet OMZP::git
 ####################################################################################################
 # Configure Completions
 ####################################################################################################
+if [ ! -d $HOME/.zcompletions ]; then
+    mkdir $HOME/.zcompletions
+fi
+fpath+=$HOME/.zcompletions
+
 # Load Completions
 autoload -Uz compinit && compinit
 
@@ -141,10 +146,6 @@ setopt hist_ignore_all_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
-
-####################################################################################################
-# Aliases
-####################################################################################################
 
 ####################################################################################################
 # Fix Home, End, Delete, and Forward/Backward (ctrl+left/right)

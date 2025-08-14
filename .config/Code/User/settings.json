@@ -48,5 +48,20 @@
         "-workbench.action.terminal.focusFind",     // ctrl-f (autocomplete)
         "-workbench.action.files.newUntitledFile",  // ctrl-n (previous autocomplete suggestion)
         "-workbench.action.quickOpen",              // ctrl-p (next auto complete suggestion)
-    ]
+    ],
+    "monkeyC.typeCheckLevel": "Informative",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "remote.defaultExtensionsIfInstalledLocally": [
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        "GitHub.vscode-pull-request-github"
+    ],
+    "python.analysis.typeCheckingMode": "standard",
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "github.copilot.enable": {
+        "*": true,
+        "plaintext": false,
+        "markdown": true,
+        "scminput": false
+    }
 }
