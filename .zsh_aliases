@@ -23,6 +23,17 @@ alias gbc="git branch -d \$(git branch --merged main | grep -v main)"
 alias gsm="git submodule update --init --recursive"
 alias glr="git pull --recurse; git submodule update --init --recursive"
 
+alias gclb="git_pull_bare"
+git_pull_bare() {
+    git clone --recurse-submodules --bare $1
+    repo=$(echo $1 | awk -F'[/"]' '{ print $(NF); }')
+    repo=$(echo $repo | awk -F'[.git]' '{ print $1 }')
+    cd $repo.git
+    git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+    git fetch
+    cd ..
+}
+
 # VPN Helpers
 if command -v nordvpn 2>&1 > /dev/null; then
     alias start_vpn='nordvpn connect'
