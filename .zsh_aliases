@@ -23,14 +23,18 @@ alias gbc="git branch -d \$(git branch --merged main | grep -v main)"
 alias gsm="git submodule update --init --recursive"
 alias glr="git pull --recurse; git submodule update --init --recursive"
 
-alias gclb="git_pull_bare"
-git_pull_bare() {
-    git clone --recurse-submodules --bare $1
-    repo=$(echo $1 | awk -F'[/"]' '{ print $(NF); }')
-    repo=$(echo $repo | awk -F'[.git]' '{ print $1 }')
-    cd $repo.git
-    git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
-    git fetch
+alias gwti="git_worktree_init"
+git_worktree_init() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: git_worktree_init <repo_url>"
+        return 1
+    fi
+    repo=$1
+    repo_name_unclean=$(echo $repo | awk -F'[/"]' '{ print $(NF); }')
+    repo_name=$(echo $repo_name_unclean | awk -F'[.git]' '{ print $1 }')
+    git clone $repo $repo_name.git
+    cd $repo_name.git
+    git checkout $(git commit-tree $(git hash-object -t tree /dev/null) < /dev/null)
     cd ..
 }
 
