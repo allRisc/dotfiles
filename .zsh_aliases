@@ -31,7 +31,7 @@ git_worktree_init() {
     fi
     repo=$1
     repo_name_unclean=$(echo $repo | awk -F'[/"]' '{ print $(NF); }')
-    repo_name=$(echo $repo_name_unclean | awk -F'[.git]' '{ print $1 }')
+    repo_name=$(echo $repo_name_unclean | awk -F'.git' '{ print $1 }')
     git clone $repo $repo_name.git
     cd $repo_name.git
     git checkout $(git commit-tree $(git hash-object -t tree /dev/null) < /dev/null)
