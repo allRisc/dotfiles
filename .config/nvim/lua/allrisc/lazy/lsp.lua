@@ -1,3 +1,4 @@
+vim.lsp.set_log_level "debug"
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -31,12 +32,18 @@ return {
         require("mason-lspconfig").setup({
             ensure_installed = {
                 "lua_ls",
+                "pyright",
+                "ruff",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
                     require("lspconfig")[server_name].setup({
                         capabilities = capabilities
                     })
+                end,
+
+                pyright = function()
+                    require("lspconfig").pyright.setup({})
                 end,
             },
         })
