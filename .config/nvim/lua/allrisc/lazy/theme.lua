@@ -1,18 +1,24 @@
+function VimColorScheme(color)
+    color = color or "catppuccin"
+    vim.cmd.colorscheme(color)
+end
+
 return {
     {
-        "catppuccin/nvim", 
-        name = "catppuccin", 
+        "catppuccin/nvim",
+        name = "catppuccin",
         priority = 1000 ,
-        config = function() 
+        config = function()
             require("catppuccin").setup({
                 flavour = "mocha"
             })
 
-            vim.cmd.colorscheme "catppuccin"
+            VimColorScheme()
+            --            vim.cmd.colorscheme "catppuccin"
         end
     },
-    { 
-        "nvim-tree/nvim-web-devicons", 
-        lazy = true 
+    {
+        "nvim-tree/nvim-web-devicons",
+        lazy = true
     },
 }
