@@ -16,70 +16,14 @@ if [[ -v LS_COLORS ]]; then
 fi
 
 ####################################################################################################
-# Setup the path
+# Setup the environment
 ####################################################################################################
-if [[ -f ~/.path.sh ]]; then
-    source ~/.path.sh
-fi
+[[ ! -f $HOME/.env ]] || source $HOME/.env
 
 ####################################################################################################
-# ZInit Package Manager
+# Setup the Tooling
 ####################################################################################################
-# Set the directory we want to store zinit and plugins
-ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
-
-# Download Zinit, if it's not there yet
-if [ ! -d "$ZINIT_HOME" ]; then
-    mkdir -p "$(dirname $ZINIT_HOME)"
-    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
-fi
-
-# Source/Load zinit
-source "${ZINIT_HOME}/zinit.zsh"
-
-####################################################################################################
-# FZF (Fuzzy Finder Integration)
-####################################################################################################
-if [[ ! -f ~/.fzf.zsh ]]; then
-    echo "Installing Fzf"
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install
-fi
-source ~/.fzf.zsh
-
-# Install 'fd' a better find
-if ! command -v fdfind 2>&1 > /dev/null; then
-    echo "Installing fd (through the fd-find pacakge)"
-    sudo apt install fd-find
-fi
-
-if [ ! -f ~/.local/bin/fd ]; then
-    echo "Linking fd to fdfind"
-    ln -s $(command -v fdfind) ~/.local/bin/fd
-fi
-
-# Use fd for listing FZF path candidates
-_fzf_compgen_path () {
-    fd --hidden --follow --exclude ".git" . "$1"
-}
-
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir () {
-    fd --type d --hidden --follow --exclude ".git" . "$1"
-}
-
-####################################################################################################
-# ZOxide (Better CD)
-####################################################################################################
-
-if [ ! -f ~/.local/bin/zoxide ]; then
-    pushd ~/.local
-    echo "Installing ZOxide"
-    curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
-    popd
-fi
-
-eval "$(zoxide init --cmd cd zsh)"
+[[ -f $HOME/.zsh_tools ]] && source $HOME/.zsh_tools
 
 ####################################################################################################
 # Setup the Prompt (PowerLevel10k)
@@ -160,13 +104,8 @@ bindkey "^[[1;5D" backward-word
 ####################################################################################################
 # Aliases
 ####################################################################################################
-if [[ -f ~/.zsh_funcs ]]; then
-    source ~/.zsh_funcs
-fi
-
-if [[ -f ~/.zsh_aliases ]]; then
-    source ~/.zsh_aliases
-fi
+[[ ! -f ~/.zsh_funcs ]] || source ~/.zsh_funcs
+[[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases
 
 ####################################################################################################
 # Load Powerlevel10k Config
@@ -175,7 +114,3 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm use node
