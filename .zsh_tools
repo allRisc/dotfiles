@@ -81,6 +81,11 @@ if [ ! -f $HOME/.local/bin/tmux ]; then
     popd
 fi
 
+if [ ! -d $HOME/.config/tmux/plugins/tpm ]; then
+    echo "Installing TMux Package Manager (TPM)"
+    git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+fi
+
 ###################################################################################################
 # NVM (NodeJS and NPM)
 ####################################################################################################
