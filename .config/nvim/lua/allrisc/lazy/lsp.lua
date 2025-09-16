@@ -1,4 +1,5 @@
 vim.lsp.set_log_level "debug"
+
 return {
     "neovim/nvim-lspconfig",
     dependencies = {
@@ -35,17 +36,7 @@ return {
                 "pyright",
                 "ruff",
             },
-            handlers = {
-                function(server_name) -- default handler (optional)
-                    require("lspconfig")[server_name].setup({
-                        capabilities = capabilities
-                    })
-                end,
-
-                pyright = function()
-                    require("lspconfig").pyright.setup({})
-                end,
-            },
+            automatic_enable = true;
         })
 
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -59,7 +50,7 @@ return {
             mapping = cmp.mapping.preset.insert({
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                ['<C-f>'] = cmp.mapping.confirm({ select = true }),
                 ["<C-Space>"] = cmp.mapping.complete(),
             }),
             sources = cmp.config.sources({
@@ -70,8 +61,13 @@ return {
             })
         })
 
+        -- Key-binding
+        vim.keymap.set("n", "ga", function() vim.lsp.buf.code_action() end)
+
+        -- Diagnostic Setup
         vim.diagnostic.config({
-            -- update_in_insert = true,
+            update_in_insert = true,
+            virtual_text = true,
             float = {
                 focusable = false,
                 style = "minimal",
@@ -81,5 +77,36 @@ return {
                 prefix = "",
             },
         })
+
+        -- LSP Configurations
+
+        -- Ruff LSP
+        vim.api.nvim_create_autocmd("LspAttach", {
+            group = vim.api.nvim_create_augroup("lsp_attached_disable_ruff", { clear = true }),
+            callback = function(args)
+                local client = vim.lsp.get_client_by_id(args.data.client_id)
+                if client == nil then
+                    return
+                end
+                if client.name == 'ruff' then
+                    -- Disable hover in favor of pyright
+                    client.server_capabilities.hoverProvider = false
+                end
+            end,
+            desc = "LSP: Disable certain LSP capabilities from Ruff",
+        })
+
+        -- Lua (lua-language-server)
+        vim.lsp.config('lua_ls', {
+            settings = {
+                Lua = {
+                    runtime = { version = 'Lua 5.1' },
+                    diagnostics = {
+                        globals = { 'bit', 'vim', 'it', 'describe', 'before_each', 'after_each' },
+                    },
+                },
+            },
+        })
+
     end
 }
