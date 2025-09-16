@@ -1,8 +1,8 @@
 [credential]
 	helper = store
 [user]
-	email = b-davis1@ti.com
-	name = Ben Davis
+	email = allrisc.dev@gmail.com
+	name = allRisc
 [init]
 	defaultBranch = main
 [alias]
