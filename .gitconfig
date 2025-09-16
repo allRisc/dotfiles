@@ -1,8 +1,7 @@
 [credential]
 	helper = store
-[user]
-	email = allrisc.dev@gmail.com
-	name = allRisc
+[include]
+	path = /home/a0504063/.config/git/gituser.inc
 [init]
 	defaultBranch = main
 [alias]
