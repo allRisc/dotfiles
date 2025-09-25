@@ -7,10 +7,15 @@ return {
     {
         "catppuccin/nvim",
         name = "catppuccin",
-        priority = 1000 ,
+        priority = 1000,
         config = function()
             require("catppuccin").setup({
-                flavour = "mocha"
+                flavour = "mocha",
+                float = {
+                    transparent = false,
+                    solid = false,
+                },
+                auto_integrations = true,
             })
 
             VimColorScheme()
