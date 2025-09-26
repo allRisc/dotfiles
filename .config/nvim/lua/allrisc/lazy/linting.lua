@@ -2,6 +2,8 @@ return {
     "mfussenegger/nvim-lint",
     lazy = true,
     events = { "BufEnter", "BufWritePost", "InsertLeave" },
+    cond = (function() return not vim.g.vscode end),
+
     config = function()
         require("lint").linters_by_ft = {}
 

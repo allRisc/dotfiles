@@ -1,7 +1,7 @@
 [credential]
 	helper = store
 [include]
-	path = /home/a0504063/.config/git/gituser.inc
+	path = ~/.config/git/gituser.inc
 [init]
 	defaultBranch = main
 [alias]

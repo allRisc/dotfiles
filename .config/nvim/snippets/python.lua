@@ -58,7 +58,7 @@ local docstring_args = function()
     local nodes = {}
     local insert_idx = 1
 
-    for id, match, metadata in query:iter_matches(
+   for id, match, metadata in query:iter_matches(
         function_node,
         vim.api.nvim_get_current_buf()
     ) do

@@ -7,6 +7,7 @@ return {
         },
 
         ft = "python", -- Load when opening Python files
+        cond = (function() return not vim.g.vscode end),
 
         keys = {
             { ",v", "<cmd>VenvSelect<cr>" }, -- Open picker on keymap

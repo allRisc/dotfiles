@@ -7,6 +7,10 @@ git_project_files = function()
     end
 end
 
+if vim.g.vscode then
+    vim.keymap.set("n", "<leader>pf", ":Ex<CR><Esc>")
+end
+
 return {
     {
         "nvim-telescope/telescope.nvim",
@@ -16,6 +20,7 @@ return {
         dependencies = {
             "nvim-lua/plenary.nvim"
         },
+        cond = function() return not vim.g.vscode end,
 
         config = function()
             require("telescope").setup({
@@ -46,6 +51,8 @@ return {
     {
         "nvim-telescope/telescope-file-browser.nvim",
         dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+        cond = function() return not vim.g.vscode end,
+
         config = function ()
             require("telescope").load_extension("file_browser")
         end,

@@ -1,6 +1,8 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        cond = (function() return not vim.g.vscode end),
+
         config = function()
             require("nvim-treesitter.configs").setup({
                 -- List of parser names

@@ -3,6 +3,7 @@ vim.lsp.set_log_level "debug"
 return {
     {
         "williamboman/mason.nvim",
+        cond = (function() return not vim.g.vscode end),
 
         config = function()
             require("mason").setup()
@@ -10,6 +11,7 @@ return {
     },
     {
         "williamboman/mason-lspconfig.nvim",
+        cond = (function() return not vim.g.vscode end),
 
         dependencies = {
             "williamboman/mason.nvim"
@@ -36,6 +38,7 @@ return {
 
         event = { "BufReadPost", "BufNewFile" },
         cmd = { "LspInfo", "LspInstall", "LspUninstall" },
+        cond = (function() return not vim.g.vscode end),
 
         config = function()
 

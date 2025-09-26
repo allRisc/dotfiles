@@ -1,6 +1,9 @@
 return {
     "stevearc/conform.nvim",
     opts = {},
+
+    cond = (function() return not vim.g.vscode end),
+
     config = function()
         require("conform").setup({
             format_on_save = {

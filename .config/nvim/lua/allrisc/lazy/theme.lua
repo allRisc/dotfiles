@@ -1,3 +1,7 @@
+if vim.g.vscode then
+    return {}
+end
+
 function VimColorScheme(color)
     color = color or "catppuccin"
     vim.cmd.colorscheme(color)

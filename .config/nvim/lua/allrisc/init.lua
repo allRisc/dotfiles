@@ -22,3 +22,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     end
 })
+
+if vim.g.vscode then
+    vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end)
+    vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end)
+    vim.keymap.set("n", "<leader>vd", function() require("vscode").call("editor.action.marker.next") end)
+end

@@ -1,3 +1,9 @@
+if vim.g.vscode then
+    vim.keymap.set("i", "<C-p>", function () require("vscode").call("selectPrevSuggestion") end)
+    vim.keymap.set("i", "<C-n>", function () require("vscode").call("selectNextSuggestion") end)
+    vim.keymap.set("i", "<C-f>", function() require("vscode").call("acceptSelectedSuggestion") end)
+end
+
 return {
     {
         "hrsh7th/nvim-cmp",
@@ -12,6 +18,7 @@ return {
 
         version = false,
         event = "InsertEnter",
+        cond = (function() return not vim.g.vscode end),
 
         config = function()
             local cmp = require("cmp")
@@ -38,5 +45,4 @@ return {
             })
         end,
     },
-
 }
