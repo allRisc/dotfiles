@@ -11,7 +11,7 @@ return {
                 lsp_format = "fallback",
             },
             formatters_by_ft = {
-                python = { "isort", "ruff_format" },
+                python = { "isort" },
             },
             formatters = {
             },
