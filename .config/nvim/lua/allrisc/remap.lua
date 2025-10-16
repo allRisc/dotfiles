@@ -18,6 +18,13 @@ vim.keymap.set("n", "J", "mzJ`z")
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
+-- Add full tab and shift-tab functionality
+vim.keymap.set("n", "<Tab>",   ">", { desc = "Indent line" })
+vim.keymap.set("n", "<S-Tab>", "<", { desc = "Unindent line" })
+vim.keymap.set("v", "<Tab>",   ">gv", { desc = "Indent line" })
+vim.keymap.set("v", "<S-Tab>", "<gv", { desc = "Unindent line" })
+vim.keymap.set("i", "<S-Tab>", "<C-d>", { desc = "Unindent line" })
+
 -- Add keybindings for tabs
 if vim.g.vscode then
     vim.keymap.set("n", "<leader>tt", function() require("vscode").call("welcome.showNewFileEntries") end)
