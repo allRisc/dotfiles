@@ -1,6 +1,6 @@
 if vim.g.vscode then
-    vim.keymap.set("i", "<C-p>", function () require("vscode").call("selectPrevSuggestion") end)
-    vim.keymap.set("i", "<C-n>", function () require("vscode").call("selectNextSuggestion") end)
+    vim.keymap.set("i", "<C-p>", function() require("vscode").call("selectPrevSuggestion") end)
+    vim.keymap.set("i", "<C-n>", function() require("vscode").call("selectNextSuggestion") end)
     vim.keymap.set("i", "<C-f>", function() require("vscode").call("acceptSelectedSuggestion") end)
 end
 
@@ -17,7 +17,6 @@ return {
         },
 
         version = false,
-        event = "InsertEnter",
         cond = (function() return not vim.g.vscode end),
 
         config = function()
@@ -34,7 +33,6 @@ return {
                     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
                     ['<C-f>'] = cmp.mapping.confirm({ select = true }),
-                    ["<C-F>"] = cmp.mapping.complete(),
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
