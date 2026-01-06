@@ -1,6 +1,7 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        version = "v0.10.0",
         cond = (function() return not vim.g.vscode end),
 
         config = function()
