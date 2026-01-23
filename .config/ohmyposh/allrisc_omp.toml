@@ -7,6 +7,9 @@ final_space = true
   lavender = '#B4BEFE'
   os = '#ACB0BE'
   pink = '#F5C2E7'
+  red = '#f38ba8'
+  green = '#a6e3a1'
+  peach = '#fab387'
 
 [upgrade]
   source = 'cdn'
@@ -17,6 +20,7 @@ final_space = true
 [[blocks]]
   type = 'prompt'
   alignment = 'left'
+  newline = true
 
   [[blocks.segments]]
     template = '{{ .Path }} '
@@ -98,8 +102,52 @@ final_space = true
       revert_icon = ' '
       tag_icon = ' '
 
+[[blocks]]
+  type = "rprompt"
+
   [[blocks.segments]]
+    type = "python"
+    style = "plain"
+    background = 'transparent'
+    foreground = 'p:peach'
+    template = '{{ if .Venv }} {{ .Venv }}{{ else }}{{ end }} <p:os>|</>'
+
+    [blocks.segments.options]
+      display_mode = "context"
+
+  [[blocks.segments]]
+    type = "status"
+    style = "plain"
+    background = 'transparent'
+    foreground_templates = [
+      "{{if gt .Code 0}}p:red{{end}}",
+      "{{if eq .Code 0}}p:green{{end}}",
+    ]
+    template = "{{ if eq .Code 0 }}{{ else }} {{ .Code }}{{ end }}"
+
+    [blocks.segments.options]
+      always_enabled = true
+
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    foreground_templates = [
+      "{{if gt .Code 0}}p:red{{end}}",
+      "{{if eq .Code 0}}p:closer{{end}}",
+    ]
     template = ''
-    foreground = 'p:closer'
     type = 'text'
     style = 'plain'
+
+[transient_prompt]
+  foreground_templates = [
+    "{{if gt .Code 0}}p:red{{end}}",
+    "{{if eq .Code 0}}p:closer{{end}}",
+  ]
+  background = 'transparent'
+  template = ' '
+
