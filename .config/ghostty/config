@@ -19,3 +19,7 @@ keybind = all:ctrl+shift+,=reload_config
 keybind = all:ctrl+==increase_font_size:1
 keybind = all:ctrl++=increase_font_size:1
 keybind = all:ctrl+-=decrease_font_size:1
+
+keybind = all:copy=copy_to_clipboard
+keybind = all:paste=paste_from_clipboard
+keybind = all:ctrl+shift+v=paste_from_clipboard

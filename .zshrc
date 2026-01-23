@@ -1,12 +1,6 @@
 ####################################################################################################
 # Instant Prompt
 ####################################################################################################
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 ####################################################################################################
 # Get LS Colors if necessary
@@ -27,9 +21,10 @@ fi
 [[ -f $HOME/.zsh_tools ]] && source $HOME/.zsh_tools
 
 ####################################################################################################
-# Setup the Prompt (PowerLevel10k)
+# Load Oh-My-Posh Config
 ####################################################################################################
-zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+eval "$(oh-my-posh init zsh --config $HOME/.config/ohmyposh/allrisc_omp.toml)"
 
 ####################################################################################################
 # ZSH Plugins
@@ -107,11 +102,4 @@ bindkey "^[[1;5D" backward-word
 ####################################################################################################
 [[ ! -f ~/.zsh_funcs ]] || source ~/.zsh_funcs
 [[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases
-
-####################################################################################################
-# Load Powerlevel10k Config
-####################################################################################################
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
