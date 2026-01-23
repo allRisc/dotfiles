@@ -1,0 +1,21 @@
+# Use zsh as the default shell
+shell-integration = "zsh"
+
+# Font setup for icons and readability
+font-family = "Fira Code"
+font-feature = +liga +dlig
+
+# Best theme ever
+theme = "Catppuccin Mocha"
+
+# Set terminal environment
+term = xterm-256color
+
+# Remove Keybinds
+keybind = clear
+
+# Rebind bare minimum
+keybind = all:ctrl+shift+,=reload_config
+keybind = all:ctrl+==increase_font_size:1
+keybind = all:ctrl++=increase_font_size:1
+keybind = all:ctrl+-=decrease_font_size:1

@@ -1,3 +1,5 @@
 lazy-lock.json
 .config/Code
 .config/tmux/plugins/
+
+*.swp
