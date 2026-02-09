@@ -38,6 +38,15 @@ git_worktree_init() {
     cd ..
 }
 
+alias gwta="git_worktree_add"
+git_worktree_add() {
+    if [[ $# -ne 1 ]]; then
+        echo "Usage: git_worktree_add <branch>"
+        return 1
+    fi
+    git worktree add $1 $1
+}
+
 # VPN Helpers
 if command -v nordvpn 2>&1 > /dev/null; then
     alias start_vpn='nordvpn connect'
