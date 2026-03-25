@@ -5,16 +5,63 @@
 
 WT_VERSION="1.0.0"
 
+# Resolve command abbreviations to full command names
+__wt_resolve_abbrev() {
+    local abbrev="$1"
+    local commands=("init" "switch" "delete" "list" "update" "push" "version" "help")
+    
+    # Check for exact match first
+    for cmd in "${commands[@]}"; do
+        if [[ "$abbrev" == "$cmd" ]]; then
+            echo "$cmd"
+            return 0
+        fi
+    done
+    
+    # Find matching commands (abbreviation must match start of command)
+    local matches=()
+    for cmd in "${commands[@]}"; do
+        if [[ "$cmd" == "$abbrev"* ]]; then
+            matches+=("$cmd")
+        fi
+    done
+    
+    # Handle results
+    case ${#matches[@]} in
+        0)
+            # No match - return original
+            echo "$abbrev"
+            return 1
+            ;;
+        1)
+            # Unique match found
+            echo "${matches[1]}"
+            return 0
+            ;;
+        *)
+            # Ambiguous - warn and return original
+            echo "wt: ambiguous command '$abbrev' (matches: ${matches[*]})" >&2
+            echo "$abbrev"
+            return 1
+            ;;
+    esac
+}
+
 # Main wt function
 wt() {
-    local cmd="${1:-}"
+    local raw_cmd="${1:-}"
     
-    if [[ -z "$cmd" ]]; then
+    if [[ -z "$raw_cmd" ]]; then
         __wt_usage
         return 1
     fi
     
     shift
+    
+    # Resolve abbreviation to full command
+    local cmd
+    cmd=$(__wt_resolve_abbrev "$raw_cmd")
+    local resolve_status=$?
     
     case "$cmd" in
         init)
@@ -56,7 +103,7 @@ wt - Git Worktree Manager v${WT_VERSION}
 
 Usage: wt <command> [options]
 
-Commands:
+Commands (can be abbreviated):
     init <remote> [dest]    Clone a bare repository for worktree use
     switch [-c] <branch>    Switch to or create a worktree for a branch
     delete [-f] <branch>    Remove a worktree
@@ -65,6 +112,11 @@ Commands:
     push [remote] [branch]  Push the current branch to remote
     version                 Show version information
     help                    Show this help message
+
+Examples:
+    wt sw feature-branch    (switch)
+    wt del -f feature-branch (delete force)
+    wt li                   (list)
 
 Run 'wt <command> --help' for more information on a specific command.
 EOF
