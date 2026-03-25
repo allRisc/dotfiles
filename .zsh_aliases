@@ -19,7 +19,8 @@ alias la='ls -l -A --color=always'
 # Git aliases
 zinit snippet OMZP::git  # A collection from Oh-My_Zsh
 
-alias gbc="git branch -d \$(git branch --merged main | grep -v main)"
+alias gbc="git branch --delete --force \$(git branch --merged main | grep -v main)"
+alias gbC="git branch --delete --force \$(git branch --merged main | grep -v main)"
 alias gsm="git submodule update --init --recursive"
 alias glr="git pull --recurse; git submodule update --init --recursive"
 
