@@ -317,6 +317,12 @@ EOF
         
         if git --git-dir="$git_dir" worktree add -b "$branch" "$worktree_path" "$base_branch"; then
             cd "$worktree_path" || return 1
+            
+            # Set upstream if a matching branch exists on origin
+            if git --git-dir="$git_dir" show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null; then
+                git branch --set-upstream-to="origin/$branch" "$branch"
+            fi
+            
             echo "Created and switched to new worktree for '$branch'"
         else
             echo "wt switch: failed to create worktree" >&2
@@ -347,6 +353,14 @@ EOF
             # Branch exists locally, just add the worktree
             if git --git-dir="$git_dir" worktree add "$worktree_path" "$branch"; then
                 cd "$worktree_path" || return 1
+                
+                # Set upstream if a matching branch exists on origin and no upstream is set
+                if git --git-dir="$git_dir" show-ref --verify --quiet "refs/remotes/origin/$branch" 2>/dev/null; then
+                    if ! git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' >/dev/null 2>&1; then
+                        git branch --set-upstream-to="origin/$branch" "$branch"
+                    fi
+                fi
+                
                 echo "Created and switched to worktree for '$branch'"
             else
                 echo "wt switch: failed to create worktree" >&2
