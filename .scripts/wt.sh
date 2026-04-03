@@ -661,7 +661,11 @@ if [[ -n "$ZSH_VERSION" ]]; then
                 _describe -t commands 'wt commands' commands
                 ;;
             args)
-                case "${words[2]}" in
+                # Resolve the abbreviated command to its full name for completion
+                local resolved_cmd
+                resolved_cmd=$(__wt_resolve_abbrev "${words[2]}" 2>/dev/null) || resolved_cmd="${words[2]}"
+                
+                case "$resolved_cmd" in
                     switch)
                         _arguments \
                             '-c[Create a new branch]' \
