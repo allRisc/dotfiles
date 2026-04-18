@@ -104,3 +104,5 @@ bindkey "^[[1;5D" backward-word
 [[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases
 
 [[ ! -f ~/.scripts/wt.sh ]] || source ~/.scripts/wt.sh
+
+[[ ! -f ~/.zsh_post ]] || source ~/.zsh_post
