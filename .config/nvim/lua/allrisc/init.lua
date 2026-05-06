@@ -1,4 +1,6 @@
 require("allrisc.set")
+require("allrisc.remap")
 
-require("allrisc.plugins.theme")
+require("allrisc.plugins")
 require("allrisc.treesitter") 
+

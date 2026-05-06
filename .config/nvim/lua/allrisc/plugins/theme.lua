@@ -21,8 +21,3 @@ require("catppuccin").setup({
 
 VimColorScheme()
 
--- Add Icons collection scheme
-vim.pack.add({ 
-    { src="https://github.com/nvim-tree/nvim-web-devicons", version="master" },
-})
-require("nvim-web-devicons").setup({})
