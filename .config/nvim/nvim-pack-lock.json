@@ -1,0 +1,19 @@
+{
+  "plugins": {
+    "nvim": {
+      "rev": "605b4603797de970e9f3a4238c199c850da03186",
+      "src": "https://github.com/catppuccin/nvim",
+      "version": "'v2.0.0'"
+    },
+    "nvim-web-devicons": {
+      "rev": "4fc505ac7bd7692824a142e96e5f529c133862f8",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons",
+      "version": "'master'"
+    },
+    "tree-sitter-manager.nvim": {
+      "rev": "69c48bff61d763280e472a3fe989338f949583e3",
+      "src": "https://github.com/romus204/tree-sitter-manager.nvim",
+      "version": "'69c48bf'"
+    }
+  }
+}
