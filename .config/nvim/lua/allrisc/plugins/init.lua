@@ -17,4 +17,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
 
 require("allrisc.plugins.common")
 require("allrisc.plugins.theme")
+require("allrisc.plugins.blink")
 require("allrisc.plugins.telescope")
+
+vim.cmd.packadd("nvim.undotree")
