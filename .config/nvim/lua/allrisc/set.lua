@@ -33,9 +33,12 @@ vim.opt.incsearch = true   -- Incrementally show search results as you type
 
 -- Folding settings
 vim.opt.smoothscroll = true
-vim.wo.foldmethod = "expr"
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99 -- Start with all folds open
 vim.opt.formatoptions = "jcroqlnt"
+
+-- Grep Settings
 vim.opt.grepformat = "%f:%l:%c:%m"
 vim.opt.grepprg = "rg --vimgrep"
 
