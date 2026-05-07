@@ -54,10 +54,18 @@ vim.g.netrw_browse_split = 4 -- open files in the previous window
 vim.g.netrw_liststyle = 3 -- Setup the default list style
 vim.g.netrw_winsize = 14 -- Set the width of the netrw drawer
 
+-- Setup folding to improve visual polish
+vim.opt.fillchars = {
+    foldopen = " ",
+    foldclose = " ",
+    fold = " ",
+    foldsep = " ",
+}
+
 -- Create undo directory if it doesn't exist
 local undodir = vim.fn.expand("~/.vim/undodir")
 if vim.fn.isdirectory(undodir) == 0 then
-  vim.fn.mkdir(undodir, "p")
+    vim.fn.mkdir(undodir, "p")
 end
 
 -- Default Filetype Handling
