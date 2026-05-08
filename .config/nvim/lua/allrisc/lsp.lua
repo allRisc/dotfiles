@@ -54,21 +54,5 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
--- Python LSP Setup
-vim.lsp.config['pyright'] = {
-    cmd = { 'pyright-langserver', '--stdio' },
-    filetypes = { 'python' },
-    root_markers = { 'pyproject.toml', '.venv', '.git' },
-    settings = {
-        python = {
-            analysis = {
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = 'openFilesOnly',
-            },
-        },   
-    },
-}
-
-vim.lsp.enable({"lua_ls", "pyright"})
+vim.lsp.enable({"lua_ls", "pyright", "svls", "bashls", "clangd", "zls"})
 

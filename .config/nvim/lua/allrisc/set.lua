@@ -82,4 +82,3 @@ vim.filetype.add({
     ["%.env%.[%w_.-]+"] = "dotenv",
   },
 })
-
