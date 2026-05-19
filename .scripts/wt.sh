@@ -9,15 +9,35 @@ WT_VERSION="1.0.0"
 __wt_resolve_abbrev() {
     local abbrev="$1"
     local commands=("init" "switch" "delete" "list" "update" "push" "version" "help")
-    
-    # Check for exact match first
+
+    # Define aliases map
+    local -A aliases=(
+        [ls]="list"
+        [li]="list"
+        [sw]="switch"
+        [del]="delete"
+        [rm]="delete"
+        [mk]="init"
+        [new]="init"
+        [up]="update"
+        [p]="push"
+        [ps]="push"
+    )
+
+    # Check for exact match first (including command names)
     for cmd in "${commands[@]}"; do
         if [[ "$abbrev" == "$cmd" ]]; then
             echo "$cmd"
             return 0
         fi
     done
-    
+
+    # Check for alias match
+    if [[ -n "${aliases[$abbrev]}" ]]; then
+        echo "${aliases[$abbrev]}"
+        return 0
+    fi
+
     # Find matching commands (abbreviation must match start of command)
     local matches=()
     for cmd in "${commands[@]}"; do
@@ -25,7 +45,7 @@ __wt_resolve_abbrev() {
             matches+=("$cmd")
         fi
     done
-    
+
     # Handle results
     case ${#matches[@]} in
         0)
@@ -103,20 +123,22 @@ wt - Git Worktree Manager v${WT_VERSION}
 
 Usage: wt <command> [options]
 
-Commands (can be abbreviated):
-    init <remote> [dest]    Clone a bare repository for worktree use
-    switch [-c] <branch>    Switch to or create a worktree for a branch
-    delete [-f] <branch>    Remove a worktree
-    list                    List all worktrees
-    update                  Fetch and prune remote branches
-    push [remote] [branch]  Push the current branch to remote
+Commands (can be abbreviated or aliased):
+    init <remote> [dest]    Clone a bare repository for worktree use (aliases: mk, new)
+    switch [-c] <branch>    Switch to or create a worktree for a branch (alias: sw)
+    delete [-f] <branch>    Remove a worktree (aliases: del, rm)
+    list                    List all worktrees (aliases: ls, li)
+    update                  Fetch and prune remote branches (alias: up)
+    push [remote] [branch]  Push the current branch to remote (aliases: p, ps)
     version                 Show version information
     help                    Show this help message
 
 Examples:
     wt sw feature-branch    (switch)
     wt del -f feature-branch (delete force)
-    wt li                   (list)
+    wt ls                   (list)
+    wt mk <remote>          (init)
+    wt up                   (update)
 
 Run 'wt <command> --help' for more information on a specific command.
 EOF
