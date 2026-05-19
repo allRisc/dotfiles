@@ -17,10 +17,19 @@ vim.api.nvim_create_autocmd("InsertEnter", {
                 nerd_font_variant = "mono"
             },
             completion = {
-                documentation = { autoshow = false }
+                documentation = { auto_show = false }
             },
-            source = {
+            sources = {
                 default = { "lsp", "path", "snippets", "buffer" },
+                providers = {
+                    path = {
+                        opts = {
+                            get_cwd = function(_)
+                                return vim.fn.getcwd()
+                            end,
+                        },
+                    },
+                },
             },
             fuzzy = { implementation = "prefer_rust_with_warning" },
         })
