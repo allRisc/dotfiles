@@ -49,10 +49,7 @@ vim.opt.splitkeep = "screen"
 
 -- Setup the file explorer
 vim.g.netrw_banner = 0 -- Hide the netrw banner
-vim.g.netrw_altv = 1 -- Create the split of the NetRW window to the left
-vim.g.netrw_browse_split = 4 -- open files in the previous window
 vim.g.netrw_liststyle = 3 -- Setup the default list style
-vim.g.netrw_winsize = 14 -- Set the width of the netrw drawer
 
 -- Setup folding to improve visual polish
 vim.opt.fillchars = {

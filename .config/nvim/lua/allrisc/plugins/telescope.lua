@@ -41,7 +41,10 @@ local builtin = require('telescope.builtin')
 vim.keymap.set("n", "<leader>fv", ":Telescope file_browser path=%:p:h select_buffer=true<CR><Esc>")
 
 -- Find files in current directory
-vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
+vim.keymap.set('n', '<leader>ff',
+    function () builtin.find_files({ hidden = true }) end,
+    { desc = 'Find Files' }
+)
 
 -- Live grep search in project
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live Grep' })
