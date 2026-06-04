@@ -1,5 +1,6 @@
 # About: Install tooling which is used in ZSH
 
+mkdir -p $HOME/.local/bin
 
 ####################################################################################################
 # ZInit Package Manager
@@ -90,6 +91,14 @@ fi
 if [ ! -d $HOME/.config/tmux/plugins/tpm ]; then
     echo "Installing TMux Package Manager (TPM)"
     git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+fi
+
+###################################################################################################
+# oh-my-posh
+####################################################################################################
+if [ ! -f ~/.local/bin/oh-my-posh ]; then
+    echo "Installing oh-my-posh"
+    curl -s https://ohmyposh.dev/install.sh | bash -s
 fi
 
 ###################################################################################################
