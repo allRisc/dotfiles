@@ -113,7 +113,7 @@ if [ ! -d $NVM_DIR ]; then
     git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
     popd
     source $NVM_DIR/nvm.sh
-    nvm install 22
+    nvm install 24
 fi
 
 [ -s "$NVM_DIR/nvm.sh" ] && source $NVM_DIR/nvm.sh  # This loads nvm
