@@ -105,5 +105,6 @@ bindkey "^[[1;5D" backward-word
 
 [[ ! -f ~/.scripts/wt.sh ]] || source ~/.scripts/wt.sh
 [[ ! -f ~/.scripts/tmux-popup-edit.sh ]] || source ~/.scripts/tmux-popup-edit.sh
+[[ ! -f ~/.scripts/allrisc-install.sh ]] || source ~/.scripts/allrisc-install.sh
 
 [[ ! -f ~/.zsh_post ]] || source ~/.zsh_post
