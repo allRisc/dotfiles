@@ -24,30 +24,6 @@ alias gbC="git branch --delete --force \$(git branch --merged main | grep -v mai
 alias gsm="git submodule update --init --recursive"
 alias glr="git pull --recurse; git submodule update --init --recursive"
 
-alias gwti="git_worktree_init"
-git_worktree_init() {
-    if [[ $# -ne 1 ]]; then
-        echo "Usage: git_worktree_init <repo_url>"
-        return 1
-    fi
-    repo=$1
-    repo_name_unclean=$(echo $repo | awk -F'[/"]' '{ print $(NF); }')
-    repo_name=$(echo $repo_name_unclean | awk -F'.git' '{ print $1 }')
-    git clone $repo $repo_name.git
-    cd $repo_name.git
-    git checkout $(git commit-tree $(git hash-object -t tree /dev/null) < /dev/null)
-    cd ..
-}
-
-alias gwta="git_worktree_add"
-git_worktree_add() {
-    if [[ $# -ne 1 ]]; then
-        echo "Usage: git_worktree_add <branch>"
-        return 1
-    fi
-    git worktree add $1 $1
-}
-
 # Rip-Grep Overrides
 alias rgrep='rg'
 
