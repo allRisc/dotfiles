@@ -48,6 +48,9 @@ git_worktree_add() {
     git worktree add $1 $1
 }
 
+# Rip-Grep Overrides
+alias rgrep='rg'
+
 # VPN Helpers
 if command -v nordvpn 2>&1 > /dev/null; then
     alias start_vpn='nordvpn connect'

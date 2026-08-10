@@ -71,4 +71,9 @@ allrisc_install() {
         echo "Installing tree-sitter"
         npm install -g tree-sitter-cli
     fi
+
+    if ! command -v rg 2>&1 > /dev/null; then
+	echo "Installing ripgrep"
+	sudo apt install ripgrep
+    fi
 }
