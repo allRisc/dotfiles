@@ -103,8 +103,11 @@ bindkey "^[[1;5D" backward-word
 [[ ! -f ~/.zsh_funcs ]] || source ~/.zsh_funcs
 [[ ! -f ~/.zsh_aliases ]] || source ~/.zsh_aliases
 
-[[ ! -f ~/.scripts/wt.sh ]] || source ~/.scripts/wt.sh
-[[ ! -f ~/.scripts/tmux-popup-edit.sh ]] || source ~/.scripts/tmux-popup-edit.sh
-[[ ! -f ~/.scripts/allrisc-install.sh ]] || source ~/.scripts/allrisc-install.sh
+# Source all .sh files in .scripts directory
+if [[ -d ~/.scripts ]]; then
+    for script in ~/.scripts/*.sh; do
+        [[ -f "$script" ]] && source "$script"
+    done
+fi
 
 [[ ! -f ~/.zsh_post ]] || source ~/.zsh_post
