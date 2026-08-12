@@ -8,14 +8,9 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
  */
 const profiles = [
 	{
-		name: "api-key-helper",
-		provider: "anthropic-api-key-helper",
-		model: "claude-sonnet-4-5",
-	},
-	{
-		name: "work",
-		provider: "anthropic",
-		model: "claude-sonnet-4-5",
+		name: "litellm",
+		provider: "litellm",
+		model: "claude-haiku-latest",
 	},
 	{
 		name: "personal",
@@ -46,7 +41,7 @@ async function selectLoggedInProfile(
 
 			if (await pi.setModel(model)) {
 				ctx.ui.setStatus(
-					"auto-model",
+					"auto-provider",
 					`${profile.name}: ${profile.provider}/${profile.model}`,
 				);
 				return true;
@@ -56,7 +51,7 @@ async function selectLoggedInProfile(
 			// other profiles. Pi will provide its normal authentication guidance
 			// if none of them can be selected.
 			console.error(
-				`auto-model: unable to inspect ${profile.provider}:`,
+				`auto-provider: unable to inspect ${profile.provider}:`,
 				error,
 			);
 		}
@@ -68,12 +63,12 @@ async function selectLoggedInProfile(
 	return false;
 }
 
-export default function autoModelExtension(pi: ExtensionAPI): void {
+export default function autoProviderExtension(pi: ExtensionAPI): void {
 	pi.on("session_start", async (_event, ctx) => {
 		await selectLoggedInProfile(pi, ctx);
 	});
 
-	pi.registerCommand("auto-model", {
+	pi.registerCommand("auto-provider", {
 		description: "Select the first configured provider/model with credentials",
 		handler: async (_args, ctx) => {
 			await selectLoggedInProfile(pi, ctx);
@@ -82,7 +77,7 @@ export default function autoModelExtension(pi: ExtensionAPI): void {
 
 	pi.on("model_select", async (event, ctx) => {
 		ctx.ui.setStatus(
-			"auto-model",
+			"auto-provider",
 			`${event.model.provider}/${event.model.id}`,
 		);
 	});

@@ -10,6 +10,7 @@ lazy-lock.json
 !.pi/agent/
 .pi/agent/*
 !.pi/agent/settings.json
+!.pi/agent/models.json
 !.pi/agent/extensions/
 !.pi/agent/extensions/**
 !.pi/agent/themes/
