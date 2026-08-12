@@ -3,5 +3,5 @@
   "theme": "catppuccin-mocha",
   "defaultThinkingLevel": "medium",
   "defaultProvider": "litellm",
-  "defaultModel": "claude-sonnet-5"
+  "defaultModel": "claude-haiku-latest"
 }

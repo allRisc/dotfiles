@@ -8,14 +8,14 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
  */
 const profiles = [
 	{
-		name: "litellm",
-		provider: "litellm",
-		model: "claude-haiku-latest",
-	},
-	{
 		name: "personal",
 		provider: "opencode",
 		model: "gpt-5.6-luna",
+	},
+	{
+		name: "work",
+		provider: "litellm",
+		model: "claude-haiku-latest",
 	},
 ] as const;
 
