@@ -24,6 +24,64 @@ runs and blocks two classes of commands:
 Both checks inspect each simple command in a compound command line, so
 `echo hi; rm -rf /etc` is blocked as well.
 
+## Custom tool toggle
+
+`agent/extensions/tool-toggle.ts` adds `/tools`, a TUI component that enables
+and disables **custom** tools (every tool whose `sourceInfo.source` is not
+`builtin`: extension, SDK, and package tools). Built-in tools are never touched;
+use pi's own `--tools` / `--exclude-tools` flags for those.
+
+Disabling a tool removes it from the active tool set, so it is dropped from the
+`Available tools` section of the system prompt, its `promptGuidelines` are
+dropped as well, and the model can no longer call it. This keeps the prompt
+small and limits what a given run is able to do.
+
+### Interactive use
+
+`/tools` opens a bordered, searchable settings list:
+
+| Key | Action |
+| --- | --- |
+| `↑` / `↓` | Move between tools |
+| `enter` / `space` | Toggle the selected tool |
+| `ctrl+a` | Enable every custom tool |
+| `ctrl+n` | Disable every custom tool |
+| type text | Fuzzy search by tool name |
+| `esc` | Close |
+
+Each row shows the tool name, its current state, and, for the selected row, the
+first line of its description plus the source it came from. Toggles apply
+immediately, so the next model request already uses the new tool set. While at
+least one custom tool is disabled, the footer shows `⊘ N tools`.
+
+### Non-interactive use
+
+- `/tools all` — enable every custom tool
+- `/tools none` — disable every custom tool
+- `/tools list` — print the current state without opening the component
+
+These work in non-TUI modes, where the interactive component is unavailable.
+
+### Starting a run with a reduced tool set
+
+The extension registers a `--custom-tools` flag:
+
+```bash
+pi --custom-tools none            # no custom tools this run
+pi --custom-tools all             # all custom tools this run
+pi --custom-tools webfetch,todo   # only these custom tools
+```
+
+Unknown names are ignored and reported in the transcript.
+
+### Persistence
+
+Every change appends a `tool-toggle` entry to the session. On session start and
+on session-tree navigation the extension replays the last entry of the current
+branch, so the selection survives `/reload`, resume, and branch switches. Tools
+that no longer exist are dropped silently. When a branch has no stored entry,
+the currently active tools are kept as-is.
+
 ## Dynamic Anthropic API keys
 
 The `anthropic-api-key-helper` provider mirrors Claude Code's `apiKeyHelper`:

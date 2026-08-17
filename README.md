@@ -41,8 +41,8 @@ Each program has a focused README next to its configuration:
 - [Oh My Posh](.config/ohmyposh/README.md) — active and alternate prompt themes.
 - [ripgrep](.config/ripgrep/README.md) — global search exclusions and shell integration.
 - [tmux](.config/tmux/README.md) — multiplexer, keybindings, theme, and plugins.
-- [Pi](.pi/README.md) — Pi extensions, including the bash command guard and
-  the dynamic Anthropic `apiKeyHelper` provider.
+- [Pi](.pi/README.md) — Pi extensions, including the bash command guard, the
+  custom-tool toggle, and the dynamic Anthropic `apiKeyHelper` provider.
 
 ## Zsh
 
