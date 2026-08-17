@@ -3,6 +3,27 @@
 Pi-specific configuration is stored under `agent/` and is loaded from
 `~/.pi/agent/` after installation.
 
+## Command guard
+
+`agent/extensions/command-guard.ts` validates every `bash` tool call before it
+runs and blocks two classes of commands:
+
+- **Recursive force deletes outside the working directory.** `rm -rf` (and
+  equivalent flag spellings such as `rm --recursive --force` or `rm -fr`) is
+  allowed only when every target resolves inside the current working
+  directory. Targets that resolve above it, the working directory itself, and
+  targets containing variables or command substitution (`$HOME/x`,
+  `` `pwd` ``) are blocked. Leading wrappers (`sudo`, `env`, ...) and `cd`
+  earlier in the same command line are taken into account.
+- **Forced git commands.** Any `git` invocation using `--force`,
+  `--force-with-lease`, `--force-if-includes`, `--force-rebase`, a short `-f`
+  or `-D` on a force-capable subcommand (`push`, `clean`, `checkout`,
+  `branch`, ...), or `git reset --hard` is blocked. The block reason tells the
+  model to stop and ask the user to run the command themselves.
+
+Both checks inspect each simple command in a compound command line, so
+`echo hi; rm -rf /etc` is blocked as well.
+
 ## Dynamic Anthropic API keys
 
 The `anthropic-api-key-helper` provider mirrors Claude Code's `apiKeyHelper`:
