@@ -1,4 +1,7 @@
+import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 
 /**
  * Ordered provider/model profiles.
@@ -14,10 +17,35 @@ const profiles = [
 	},
 	{
 		name: "work",
-		provider: "litellm",
+		provider: "anthropic",
 		model: "claude-haiku-latest",
 	},
 ] as const;
+
+/**
+ * auto-provider deliberately never wants a persisted default provider/model in
+ * settings.json. Pi's own login/model-selection flows can write
+ * `defaultProvider`/`defaultModel` to the global settings file (e.g. right
+ * after completing a `/login`), which would otherwise silently override the
+ * profile ordering above on the next session. Strip those keys any time we
+ * touch the model so the profile list stays authoritative.
+ */
+function clearPersistedDefaultModel(): void {
+	const settingsPath = join(getAgentDir(), "settings.json");
+	if (!existsSync(settingsPath)) return;
+
+	try {
+		const raw = readFileSync(settingsPath, "utf-8");
+		const settings = JSON.parse(raw);
+		if (!("defaultProvider" in settings) && !("defaultModel" in settings)) return;
+
+		delete settings.defaultProvider;
+		delete settings.defaultModel;
+		writeFileSync(settingsPath, `${JSON.stringify(settings, null, 2)}\n`, "utf-8");
+	} catch (error) {
+		console.error("auto-provider: unable to clear persisted default model:", error);
+	}
+}
 
 async function selectLoggedInProfile(
 	pi: ExtensionAPI,
@@ -40,6 +68,7 @@ async function selectLoggedInProfile(
 			}
 
 			if (await pi.setModel(model)) {
+				clearPersistedDefaultModel();
 				ctx.ui.setStatus(
 					"auto-provider",
 					`${profile.name}: ${profile.provider}/${profile.model}`,
@@ -76,9 +105,18 @@ export default function autoProviderExtension(pi: ExtensionAPI): void {
 	});
 
 	pi.on("model_select", async (event, ctx) => {
+		// Catch persistence from any other flow too (e.g. Pi auto-selecting a
+		// provider's default model right after a `/login` completes).
+		clearPersistedDefaultModel();
 		ctx.ui.setStatus(
 			"auto-provider",
 			`${event.model.provider}/${event.model.id}`,
 		);
+	});
+
+	// Also clean up on the way out (quit, reload, /new, resume, fork) so
+	// nothing persisted during the session lingers in settings.json.
+	pi.on("session_shutdown", async () => {
+		clearPersistedDefaultModel();
 	});
 }

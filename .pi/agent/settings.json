@@ -1,7 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.1",
+  "lastChangelogVersion": "0.84.3",
   "theme": "catppuccin-mocha",
-  "defaultThinkingLevel": "medium",
-  "defaultProvider": "litellm",
-  "defaultModel": "claude-haiku-latest"
+  "defaultThinkingLevel": "medium"
 }
