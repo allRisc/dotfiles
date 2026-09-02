@@ -37,7 +37,7 @@ allrisc_install() {
         version="3.18.2"
         curl -fL https://github.com/LuaLS/lua-language-server/releases/download/$version/lua-language-server-$version-linux-x64.tar.gz -o lua-language-server.tar.gz
         mkdir lua-language-server
-        tar -xvf lua-language-server.tar.gz -C lua-language-server/
+        tar -xf lua-language-server.tar.gz -C lua-language-server/
         cp lua-language-server/* $HOME/.local -r
         rm -rf lua-language-server*
         popd
