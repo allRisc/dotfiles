@@ -111,8 +111,11 @@ Each question may allow multiple selections. A custom text answer is offered by 
 					editor.setText("");
 					refresh();
 				};
-				const submitCustom = () => {
-					const value = editor.getText().trim();
+				// The Editor clears its own state before invoking onSubmit, so we must
+				// read the submitted text from the callback argument rather than from
+				// editor.getText() (which is already empty by this point).
+				const submitCustom = (text: string) => {
+					const value = (text ?? editor.getText()).trim();
 					if (!value) return;
 					editing = false;
 					finishQuestion([value]);
