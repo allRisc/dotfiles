@@ -33,6 +33,8 @@ const DISABLED = "disabled";
 interface ToolToggleState {
 	/** Custom tools that are enabled. Built-in tools are never listed here. */
 	enabledCustomTools: string[];
+	/** Custom tools known when this state was saved, used to enable newly added tools. */
+	knownCustomTools?: string[];
 }
 
 /** Tools that come from extensions, SDK hosts, or MCP-like sources (everything but built-ins). */
@@ -92,6 +94,7 @@ export default function toolToggleExtension(pi: ExtensionAPI) {
 	const persist = (): void => {
 		pi.appendEntry<ToolToggleState>(ENTRY_TYPE, {
 			enabledCustomTools: [...enabled].sort(),
+			knownCustomTools: customToolNames().sort(),
 		});
 	};
 
@@ -138,6 +141,23 @@ export default function toolToggleExtension(pi: ExtensionAPI) {
 
 		if (saved) {
 			enabled = new Set(saved.filter((name) => known.has(name)));
+
+			// Tool state used to be stored without the set of tools that existed
+			// when it was written. Preserve the old allow-list, but don't let it
+			// hide tools added later (for example, the question tool). An empty
+			// legacy list is kept as an explicit "none" selection.
+			const state = [...ctx.sessionManager.getBranch()]
+				.reverse()
+				.find((entry) => entry.type === "custom" && entry.customType === ENTRY_TYPE)
+				?.data as ToolToggleState | undefined;
+			if (state && state.knownCustomTools && saved.length > 0) {
+				const previouslyKnown = new Set(state.knownCustomTools);
+				for (const name of customToolNames()) {
+					if (!previouslyKnown.has(name)) enabled.add(name);
+				}
+			} else if (!state?.knownCustomTools && saved.length > 0) {
+				for (const name of customToolNames()) enabled.add(name);
+			}
 		} else {
 			// No stored decision: everything currently active stays enabled.
 			enabled = new Set(pi.getActiveTools().filter((name) => known.has(name)));

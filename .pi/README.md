@@ -82,6 +82,36 @@ branch, so the selection survives `/reload`, resume, and branch switches. Tools
 that no longer exist are dropped silently. When a branch has no stored entry,
 the currently active tools are kept as-is.
 
+## Interactive question tool
+
+`agent/extensions/question.ts` provides an OpenCode-style `question` tool. The
+agent can ask one or more questions, offer labeled options with descriptions,
+allow multiple selections, and accept a typed answer (enabled by default).
+Questions are presented sequentially in the TUI and the answers are returned to
+the agent as a labeled summary.
+
+Example shape used by the tool:
+
+```json
+{
+  "questions": [
+    {
+      "header": "Scope",
+      "question": "Which areas should be changed?",
+      "options": [
+        { "label": "CLI", "description": "Command-line behavior" },
+        { "label": "Docs", "description": "Documentation and examples" }
+      ],
+      "multiple": true,
+      "custom": true
+    }
+  ]
+}
+```
+
+The tool requires TUI mode; in print, JSON, or other non-interactive modes it
+returns an error instead of blocking for input.
+
 ## Dynamic Anthropic API keys
 
 The `anthropic-api-key-helper` provider mirrors Claude Code's `apiKeyHelper`:

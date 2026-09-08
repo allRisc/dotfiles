@@ -238,7 +238,15 @@ function applyProviders(pi: ExtensionAPI, models: ProviderModelConfig[], routing
 }
 
 export default async function (pi: ExtensionAPI) {
-  ensureFreshToken();
+  try {
+    ensureFreshToken();
+  } catch (e) {
+    // Machines without ti-claude-code-install (e.g. personal) get a quiet no-op
+    // instead of a failed extension load; the auto-provider extension handles
+    // model selection there.
+    console.log(`[ti-gateway] Skipping (token script unavailable: ${(e as Error).message})`);
+    return;
+  }
   let teamId = readTeamId();
 
   let models: ProviderModelConfig[] = [];
@@ -254,6 +262,11 @@ export default async function (pi: ExtensionAPI) {
   pi.on("session_start", async () => {
     try {
       ensureFreshToken();
+    } catch (e) {
+      console.error(`[ti-gateway] Session start token refresh failed: ${(e as Error).message}`);
+      return;
+    }
+    try {
       const newTeamId = readTeamId();
       if (newTeamId !== teamId) {
         teamId = newTeamId;
