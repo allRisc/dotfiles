@@ -1,8 +1,17 @@
 # allRisc Dotfiles
 
-Personal Linux workstation configuration managed as a GNU Stow package. The
-repository contains Zsh startup files, terminal and editor configuration,
+Personal Linux workstation configuration managed as GNU Stow packages.
+The repository contains Zsh startup files, terminal and editor configuration,
 command-line tooling, Git defaults, and Pi extensions.
+
+## Structure
+
+```
+dotfiles/
+├── common/      # Shared configs (all environments)
+├── work/        # Work-specific overrides (git identity, etc.)
+└── personal/    # Personal-specific overrides
+```
 
 ## Installation
 
@@ -14,17 +23,27 @@ command-line tooling, Git defaults, and Pi extensions.
 - `sudo` access for the optional package installation performed by the shell
   tooling bootstrap
 
-Clone the repository into your home directory and stow it from there:
+Clone the repository into your home directory and stow the appropriate packages:
 
 ```bash
 cd ~
 git clone https://github.com/allrisc/dotfiles.git dotfiles
 cd ~/dotfiles
-stow .
 ```
 
-GNU Stow creates symlinks from the repository into `$HOME`. Re-run `stow .`
-after pulling changes. To remove the links, run `stow -D .` from the repository.
+### Work machine
+```bash
+stow common work
+```
+
+### Personal machine
+```bash
+stow common personal
+```
+
+GNU Stow creates symlinks from the repository into `$HOME`. Re-run the appropriate
+`stow` command after pulling changes. To remove the links, run `stow -D common work`
+(or `personal`) from the repository.
 
 > **Note:** `.zsh_tools` performs installation and bootstrap work when Zsh
 > starts. Review it before use on a new machine, particularly if you do not
@@ -36,12 +55,12 @@ Each program has a focused README next to its configuration:
 
 ### Applications and command-line tools
 
-- [Ghostty](.config/ghostty/README.md) — terminal emulator settings.
-- [Neovim](.config/nvim/README.md) — editor entry point and plugin lockfile.
-- [Oh My Posh](.config/ohmyposh/README.md) — active and alternate prompt themes.
-- [ripgrep](.config/ripgrep/README.md) — global search exclusions and shell integration.
-- [tmux](.config/tmux/README.md) — multiplexer, keybindings, theme, and plugins.
-- [Pi](.pi/README.md) — Pi extensions, including the bash command guard, the
+- [Ghostty](common/.config/ghostty/README.md) — terminal emulator settings.
+- [Neovim](common/.config/nvim/README.md) — editor entry point and plugin lockfile.
+- [Oh My Posh](common/.config/ohmyposh/README.md) — active and alternate prompt themes.
+- [ripgrep](common/.config/ripgrep/README.md) — global search exclusions and shell integration.
+- [tmux](common/.config/tmux/README.md) — multiplexer, keybindings, theme, and plugins.
+- [Pi](common/.pi/README.md) — Pi extensions, including the bash command guard, the
   custom-tool toggle, and the dynamic Anthropic `apiKeyHelper` provider.
 
 ## Zsh
@@ -93,11 +112,17 @@ Keep machine-specific values and credentials in `$HOME/.env` or
 
 ## Git
 
-`.gitconfig` sets `main` as the default initial branch, uses Neovim as the
+`common/.gitconfig` sets `main` as the default initial branch, uses Neovim as the
 editor, enables the `store` credential helper, includes an optional local
 `~/.config/git/gituser.inc`, and defines `git com` as a shortcut for `git commit`.
-The included identity file is intentionally local and is not provided here.
+
+Environment-specific git identity (email/name) is provided by:
+- `work/.gitconfig` — work machine identity
+- `personal/.gitconfig` — personal machine identity
+
+Stow merges these with the common config, so the identity from `work` or
+`personal` takes precedence.
 
 ## Other files
 
-- `.scripts/` contains helper scripts used by the shell and tmux configuration.
+- `common/.scripts/` contains helper scripts used by the shell and tmux configuration.
