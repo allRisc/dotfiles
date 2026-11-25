@@ -1,8 +1,11 @@
 {
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "1.6.1",
   "theme": "catppuccin-mocha",
   "defaultThinkingLevel": "medium",
   "packages": [
     "npm:pi-effort"
-  ]
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-effort\",\"scope\":\"user\"}": "0.1.1"
+  }
 }
