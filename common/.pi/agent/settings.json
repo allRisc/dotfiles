@@ -7,5 +7,11 @@
   ],
   "extensionChangelogVersions": {
     "{\"source\":\"npm:pi-effort\",\"scope\":\"user\"}": "0.1.1"
+  },
+  "retry": {
+    "enabled": true,
+    "maxRetries": 10,
+    "baseDelayMs": 2000,
+    "maxAgentDelayMs": 60000
   }
 }
