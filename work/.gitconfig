@@ -1,0 +1,15 @@
+[credential]
+	helper = store
+[init]
+	defaultBranch = main
+[alias]
+	com = commit
+[core]
+	editor = nvim
+[user]
+    	email = allrisc.dev@gmail.com
+    	name = Benjamin Davis
+[includeIf "gitdir:~/repos/foss/"]
+	path = ~/.config/git/git-foss.inc
+[includeIf "gitdir:~/repos/ti_padc/"]
+	path = ~/.config/git/git-ti.inc

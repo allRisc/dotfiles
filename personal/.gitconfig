@@ -1,10 +1,11 @@
 [credential]
 	helper = store
-[include]
-	path = ~/.config/git/gituser.inc
 [init]
 	defaultBranch = main
 [alias]
 	com = commit
 [core]
 	editor = nvim
+[user]
+    email = allrisc.dev@gmail.com
+    name = Benjamin Davis

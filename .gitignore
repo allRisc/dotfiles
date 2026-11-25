@@ -1,0 +1,17 @@
+lazy-lock.json
+.config/Code
+.config/tmux/plugins/
+
+*.swp
+
+### Pi-Coding-Agent
+.pi/*
+!.pi/README.md
+!.pi/agent/
+.pi/agent/*
+!.pi/agent/settings.json
+!.pi/agent/models.json
+!.pi/agent/extensions/
+!.pi/agent/extensions/**
+!.pi/agent/themes/
+
